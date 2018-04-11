@@ -1,4 +1,6 @@
 import spidev
+import roslib; roslib.load_manifest('sr_ronex_examples')
+import rospy
 from sr_ronex_msgs.srv import SPI
 import time
 #import spi.max_speed_hz = 50000000
