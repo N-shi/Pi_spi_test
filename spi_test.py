@@ -3,7 +3,7 @@ import time
 #import spi.max_speed_hz = 50000000
 
 spi = spidev.SpiDev()
-spi.open(0,1)
+spi.open(0,0)
 counter = 0
 
 while True:
