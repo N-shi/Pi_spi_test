@@ -1,5 +1,5 @@
 import spidev
- from sr_ronex_msgs.srv import SPI
+from sr_ronex_msgs.srv import SPI
 import time
 #import spi.max_speed_hz = 50000000
 
