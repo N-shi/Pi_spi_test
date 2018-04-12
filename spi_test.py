@@ -1,30 +1,17 @@
+#!/usr/bin/env python
 import spidev
-import roslib; roslib.load_manifest('sr_ronex_examples')
-import rospy
-from sr_ronex_msgs.srv import SPI
 import time
-#import spi.max_speed_hz = 50000000
+import subprocess
 
+# open SPI device 0.0
 spi = spidev.SpiDev()
-spi.open(0,1)
-counter = 0
+spi.open(0, 0)
 
-while True:
-    try:
-        print "writing data"
-        #hello spi (ASCII)
-        data = [104, 101, 108, 111, 32]
-        #resp = spi.xfer2(data)
-        print ">>>" + str(spi.xfer2(data))
-
+try:
+    while True:
+        resp = spi.xfer2([0x68, 0x00])
+        value = (resp[0] * 256 + resp[1]) & 0x3ff
+        print value
         time.sleep(1)
-        counter += 1
-        if counter > 4:
-            break
-        time.sleep(1)
-    except(keyboardInterrupt, SystemExit):
-        spi.close()
-        raise
-spi.close()
-print "done"
-
+except KeyboardInterrupt:
+    spi.close()
