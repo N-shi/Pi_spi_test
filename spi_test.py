@@ -1,17 +1,15 @@
-#!/usr/bin/env python
 import spidev
 import time
-import subprocess
 
-# open SPI device 0.0
+usleep = lambda x : time.sleep(x/1000000.0)
+
 spi = spidev.SpiDev()
-spi.open(0, 0)
+spi.open(0, 1)
+spi.max_speed_hz = 1000000
 
-try:
-    while True:
-        resp = spi.xfer2([0x68, 0x00])
-        value = (resp[0] * 256 + resp[1]) & 0x3ff
-        print value
-        time.sleep(1)
-except KeyboardInterrupt:
-    spi.close()
+while True:
+    resp = spi.xfer2([0x00])    
+    print(resp[0])
+    usleep(1.0)
+
+spi.close()
