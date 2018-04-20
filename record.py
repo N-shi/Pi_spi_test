@@ -20,7 +20,7 @@ audio = pyaudio.PyAudio()
 
 frames = []
 def callback(in_data, frame_count, time_info, status):
-frames.append(in_data)
+  frames.append(in_data)
 return(None, pyaudio.paContinue)
 
 stream = audio.open(
@@ -35,7 +35,7 @@ stream_callback=callback
 )
 
 if name == ‘main‘:
-stream.start_stream()
+  stream.start_stream()
 time.sleep(RECORD_SECONDS)
 
 stream.stop_stream()
