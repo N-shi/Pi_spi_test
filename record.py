@@ -34,7 +34,7 @@ start=False,
 stream_callback=callback
 )
 
-if name == ‘main‘:
+if name ==　"main":
   stream.start_stream()
 time.sleep(RECORD_SECONDS)
 
