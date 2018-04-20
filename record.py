@@ -42,7 +42,7 @@ stream.stop_stream()
 stream.close()
 audio.terminate()
 
-wf = wave.open(WAVE_FILE, ‘wb’)
+wf = wave.open(WAVE_FILE, "wb")
 wf.setnchannels(CHANNELS)
 wf.setsampwidth(audio.get_sample_size(FORMAT))
 wf.setframerate(RATE)
