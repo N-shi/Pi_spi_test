@@ -11,7 +11,7 @@ RATE = 44100
 CHUNK = 2**11
 RECORD_SECONDS = 3
 try:
-WAVE_FILE = sys.argv[1]
+  WAVE_FILE = sys.argv[1]
 except:
 print(‘File name is required as an argument.’)
 sys.exit(1)
