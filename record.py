@@ -14,14 +14,14 @@ try:
   WAVE_FILE = sys.argv[1]
 except:
   print("File name is required as an argument.")
-sys.exit(1)
+  sys.exit(1)
 
 audio = pyaudio.PyAudio()
 
 frames = []
 def callback(in_data, frame_count, time_info, status):
   frames.append(in_data)
-return(None, pyaudio.paContinue)
+  return(None, pyaudio.paContinue)
 
 stream = audio.open(
 format=FORMAT,
@@ -36,7 +36,7 @@ stream_callback=callback
 
 if name == "main":
   stream.start_stream()
-time.sleep(RECORD_SECONDS)
+  time.sleep(RECORD_SECONDS)
 
 stream.stop_stream()
 stream.close()
