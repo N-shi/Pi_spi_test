@@ -1,50 +1,35 @@
-#-<em>-coding:utf-8-</em>-
-#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import pyaudio
 import wave
-import sys
-import time
 
 FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-CHUNK = 2**11
-RECORD_SECONDS = 3
-try:
-  WAVE_FILE = sys.argv[1]
-except:
-  print("File name is required as an argument.")
-  sys.exit(1)
+CHANNELS = 1        #モノラル
+RATE = 44100        #サンプルレート
+CHUNK = 2**11       #データ点数
+RECORD_SECONDS = 10 #録音する時間の長さ
+WAVE_OUTPUT_FILENAME = "file.wav"
 
 audio = pyaudio.PyAudio()
 
+stream = audio.open(format=FORMAT, channels=CHANNELS,
+        rate=RATE, input=True,
+        input_device_index=0,   #デバイスのインデックス番号
+        frames_per_buffer=CHUNK)
+print ("recording...")
+
 frames = []
-def callback(in_data, frame_count, time_info, status):
-  frames.append(in_data)
-  return(None, pyaudio.paContinue)
-
-stream = audio.open(
-format=FORMAT,
-channels=CHANNELS,
-rate=RATE,
-input=True,
-input_device_index=0,
-frames_per_buffer=CHUNK,
-start=False,
-stream_callback=callback
-)
-
-if name == "main":
-  stream.start_stream()
-  time.sleep(RECORD_SECONDS)
+for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+    data = stream.read(CHUNK)
+    frames.append(data)
+print ("finished recording")
 
 stream.stop_stream()
 stream.close()
 audio.terminate()
 
-wf = wave.open(WAVE_FILE, "wb")
-wf.setnchannels(CHANNELS)
-wf.setsampwidth(audio.get_sample_size(FORMAT))
-wf.setframerate(RATE)
-wf.writeframes(b.join(frames))
-wf.close()
+waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+waveFile.setnchannels(CHANNELS)
+waveFile.setsampwidth(audio.get_sample_size(FORMAT))
+waveFile.setframerate(RATE)
+waveFile.writeframes(b''.join(frames))
+waveFile.close()
